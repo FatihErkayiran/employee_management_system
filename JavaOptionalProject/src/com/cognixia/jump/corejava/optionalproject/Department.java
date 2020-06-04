@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This class represents a Department in a company that has a name and a list of employees.
  * @author Fatih Erkayiran, Jennifer Echavarria, Lori White
- * @version v3 (06/3/2020)
+ * @version v4 (06/04/2020)
  */
 public class Department {
 

@@ -15,5 +15,4 @@ public class EmployeeRemoveException extends Exception {
 	public EmployeeRemoveException(String message) {
 		super(message);
 	}
-
 }

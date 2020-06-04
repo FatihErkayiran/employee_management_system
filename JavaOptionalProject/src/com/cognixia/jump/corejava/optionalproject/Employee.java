@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * This class represents an employee that works for a company under a department.
  * @author Fatih Erkayiran, Jennifer Echavarria, Lori White
- * @version v3 (06/3/2020)
+ * @version v3 (06/03/2020)
  */
 public class Employee {
 	public enum EmployeeType {

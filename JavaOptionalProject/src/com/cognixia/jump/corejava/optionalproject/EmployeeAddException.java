@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cognixia.jump.corejava.optionalproject;
 
 /**
@@ -18,5 +15,4 @@ public class EmployeeAddException extends Exception{
 	public EmployeeAddException(String message) {
 		super(message);
 	}
-
 }
