@@ -76,45 +76,50 @@ public class Department {
     /**
      * Adds a new Employee to the list of employees.
      * @param employee the new Employee
-     * @throws Exception can not add an employee that doesn't exist
+     * @throws EmployeeAddException can not add an employee that doesn't exist, or an emplyee that already exists in the department
      */
-    public void addEmp(Employee employee) throws Exception{
+    public void addEmp(Employee employee) throws EmployeeAddException{
     	if(employee == null) {
-    		throw new Exception();
+    		throw new EmployeeAddException("This employee could not be added to department " + departmentName +".");
     	}
-        employeeList.add(employee);
+    	try {
+    		findEmp(employee.getEmployeeId());
+    		throw new EmployeeAddException(employee.toString() + " already exists in " + departmentName +" department.");
+    	} catch (EmployeeNotFoundException e) {
+    		employeeList.add(employee);
+    	} 
     }
     /**
      * Removes an employee from the list of employees based off the employeeID.
      * @param employeeId the employee to remove
      * @return Employee - the employee that was removed
-     * @throws Exception can not remove an employee from a list that doesn't exist or a list that is empty
+     * @throws EmployeeRemoveException can not remove an employee from a list that doesn't exist or a list that is empty
      */
-    public Employee removeEmp(int employeeId) throws Exception{
+    public Employee removeEmp(int employeeId) throws EmployeeRemoveException{
     	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-    		throw new Exception();
+    		throw new EmployeeRemoveException("Employee: "+ employeeId + " can not be found in " + departmentName + ", because the department doesn't have employees. Thus the employee can not be removed.");
     	}
     	
     	Employee employee = null;
     	
-        for(int i = 0; i < employeeList.size(); i++) {
-        	employee = employeeList.get(i);
-            if(employee.getEmployeeId() == employeeId) {
-                employeeList.remove(employee);
-                break;
-            }
-        }
+    	try {
+    		employee = findEmp(employeeId);
+    		employeeList.remove(employee);
+    	} catch (EmployeeNotFoundException e) {
+    		System.err.print(e);;
+    	} 
+    	
         return employee;
     }
     /**
      * Finds a an employee based on their id and retrieves them.
      * @param employeeId the employee to search for
      * @return Employee - the employee that was found
-     * @throws Exception can not search a list that doesn't exist or a list that is empty
+     * @throws EmployeeNotFoundException can not search a list that doesn't exist or a list that is empty
      */
-    public Employee findEmp(int employeeId) throws Exception{
+    public Employee findEmp(int employeeId) throws EmployeeNotFoundException{
     	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-    		throw new Exception();
+    		throw new EmployeeNotFoundException("Employee: "+ employeeId + " can not be found in " + departmentName + ", because the department doesn't have employees.");
     	}
     	
     	Employee employee = null;
@@ -125,19 +130,22 @@ public class Department {
                 break;
             }
         }
+    	
+    	if(employee == null) {
+    		throw new EmployeeNotFoundException("Employee: "+ employeeId + " was not found in " + departmentName + ",");
+    	}
+    	 
         return employee;
     }
     /**
      * Updates an employee in the list of current employees.
      * @param employeeId the employee to update
      * @param e the new employee to update to
-     * @throws Exception can not update a list that doesn't exist, a list that is empty, or a list that doesn't contain the employee
+     * @throws EmployeeNotFoundException can not update a list that doesn't exist, a list that is empty, or a list that doesn't contain the employee
      */
-    public void editEmp(int employeeId, Employee e) throws Exception{
+    public void editEmp(int employeeId, Employee e) throws EmployeeNotFoundException{
         Employee employee = findEmp(employeeId);
-        if(employee == null) {
-        	throw new Exception();
-        }
+        
         employee = new Employee(e);
     }
     /**
