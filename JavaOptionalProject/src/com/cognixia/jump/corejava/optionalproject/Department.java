@@ -16,7 +16,6 @@ public class Department {
     }
     private DepartmentName departmentName;
     private String location;
-    private int employeeNum;
     private List<Employee>employeeList;
 
     /**
@@ -28,7 +27,6 @@ public class Department {
     	super();
         this.departmentName = departmentName;
         this.location = location;
-        this.employeeNum = 0;
         this.employeeList = new ArrayList<Employee>();
     }
     /**
@@ -38,7 +36,6 @@ public class Department {
     public Department(Department d) {
     	this.departmentName = d.departmentName;
     	this.location = d.location;
-    	this.employeeNum = d.employeeNum;
     	this.employeeList = d.employeeList;
     }
     /**
@@ -74,7 +71,7 @@ public class Department {
      * @return int - the number of employees
      */
     public int getEmployeeNum() {
-        return employeeNum;
+        return employeeList.size();
     }
     /**
      * Retrieves the list of current employees.
@@ -93,7 +90,6 @@ public class Department {
     		throw new Exception();
     	}
         employeeList.add(employee);
-        employeeNum++;
     }
     /**
      * Removes an employee from the list of employees based off the employeeID.
@@ -107,13 +103,11 @@ public class Department {
     	}
     	
     	Employee employee = null;
-    	Iterator<Employee> emplyoeeIterator = employeeList.iterator();
     	
-        while(emplyoeeIterator.hasNext()) {
-        	employee = emplyoeeIterator.next();
+        for(int i = 0; i < employeeList.size(); i++) {
+        	employee = employeeList.get(i);
             if(employee.getEmployeeId() == employeeId) {
                 employeeList.remove(employee);
-                employeeNum--;
                 break;
             }
         }
@@ -131,10 +125,9 @@ public class Department {
     	}
     	
     	Employee employee = null;
-    	Iterator<Employee> emplyoeeIterator = employeeList.iterator();
     	
-        while(emplyoeeIterator.hasNext()) {
-        	employee = emplyoeeIterator.next();
+    	 for(int i = 0; i < employeeList.size(); i++) {
+        	employee = employeeList.get(i);
             if(employee.getEmployeeId() == employeeId) {
                 break;
             }
@@ -160,16 +153,15 @@ public class Department {
      */
     @Override
     public String toString() {
-    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + employeeNum;
+    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + getEmployeeNum();
     	
-    	if(employeeNum <= 0) {
+    	if(employeeList.size() != 0) {
     		out += ", employeeList= \n";
-        	Iterator<Employee> emplyoeeIterator = employeeList.iterator();
 
-            for(int index = 1; emplyoeeIterator.hasNext() && index < employeeNum; index++) {
-            	out += emplyoeeIterator.next().toString() + ",\n";
+            for(int index = 0; index < employeeList.size() - 1; index++) {
+            	out += employeeList.get(index).toString() + ",\n";
             }
-            out += emplyoeeIterator.next().toString() + " ]";
+            out += employeeList.get(employeeList.size() - 1).toString() + " ]";
     	}
     	else {
         	out += "]";
