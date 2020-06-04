@@ -66,13 +66,6 @@ public class Department {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	/**
-     * Retrieves the number of current employees in the department.
-     * @return int - the number of employees
-     */
-    public int getEmployeeNum() {
-        return employeeList.size();
-    }
     /**
      * Retrieves the list of current employees.
      * @return List<Employee> - the list of employees
@@ -153,7 +146,7 @@ public class Department {
      */
     @Override
     public String toString() {
-    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + getEmployeeNum();
+    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + employeeList.size();
     	
     	if(employeeList.size() != 0) {
     		out += ", employeeList= \n";
