@@ -143,9 +143,9 @@ public class Department {
      * @throws EmployeeNotFoundException can not update a list that doesn't exist, a list that is empty, or a list that doesn't contain the employee
      */
     public void editEmp(int employeeId, Employee e) throws EmployeeNotFoundException{
-        Employee employee = findEmp(employeeId);
+    	
+        employeeList.set(employeeList.indexOf(findEmp(employeeId)), new Employee(e));
         
-        employee = new Employee(e);
     }
     /**
      * Creates a string representation of a department.
