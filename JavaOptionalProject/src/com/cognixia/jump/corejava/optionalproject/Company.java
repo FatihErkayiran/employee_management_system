@@ -1,10 +1,12 @@
 package com.cognixia.jump.corejava.optionalproject;
-
+/**
+ * This class represents a Company that has a list of departments and a list of employees.
+ * @author Jennifer Echavarria, Lori White
+ * @version v2 (06/11/2020)
+ */
 public class Company {
 	
-	private String companyName;
-	//private DepartmentName departmentName;
-	
+	private String companyName;	
 	private Department[] departments;
 	private Employee[] employees;
 	
@@ -16,8 +18,10 @@ public class Company {
 		this.departments= new Department[numberOfDepartments];
 	}
 	
-	
-	// grab company name
+	/**
+	 * Retrieves the company name.
+	 * @return String - the company name
+	 */
 	public String getCompanyName() {
         return companyName;
     }

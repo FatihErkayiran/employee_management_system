@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents a Department in a company that has a name and a list of employees.
+ * This class represents a Department in a company that has a list of employees.
  * @author Fatih Erkayiran, Jennifer Echavarria, Lori White
  * @version v4 (06/04/2020)
  */
@@ -148,7 +148,7 @@ public class Department {
      */
     public void editEmp(int employeeId, Employee e) throws EmployeeNotFoundException{
     	
-        employeeList.set(employeeList.indexOf(findEmp(employeeId)), new Employee(e));
+        employeeList.set(employeeList.indexOf(findEmp(employeeId)), e);
         
     }
     /**
