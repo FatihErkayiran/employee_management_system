@@ -78,15 +78,19 @@ public class Department {
      * @throws EmployeeAddException can not add an employee that doesn't exist, or an emplyee that already exists in the department
      */
     public void addEmp(Employee employee) throws EmployeeAddException{
+    	boolean found = false;
     	if(employee == null) {
     		throw new EmployeeAddException("This employee could not be added to department " + departmentName +".");
     	}
     	try {
     		findEmp(employee.getEmployeeId());
-    		throw new EmployeeAddException(employee.toString() + " already exists in " + departmentName +" department.");
+    		found = true;
     	} catch (EmployeeNotFoundException e) {
     		employeeList.add(employee);
     	} 
+    	if(found) {
+    		throw new EmployeeAddException("This employee could not be added to department " + departmentName +" since this employee already exists.");
+    	}
     }
     /**
      * Removes an employee from the list of employees based off the employeeID.
@@ -105,7 +109,7 @@ public class Department {
     		employee = findEmp(employeeId);
     		employeeList.remove(employee);
     	} catch (EmployeeNotFoundException e) {
-    		System.err.print(e);;
+    		System.err.print(e);
     	} 
     	
         return employee;
