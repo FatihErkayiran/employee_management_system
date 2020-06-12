@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * This class represents a Department in a company that has a list of employees.
  * @author Fatih Erkayiran, Jennifer Echavarria, Lori White
- * @version v4 (06/04/2020)
+ * @version v5 (06/12/2020)
  */
 public class Department {
 
@@ -24,7 +24,7 @@ public class Department {
      * @param location the location of the department
      * @throws EmployeeAddException can not add a non-existent head of the department 
      */
-    public Department(DepartmentName departmentName, String location, Employee head) throws EmployeeAddException {
+    public Department(DepartmentName departmentName, String location, Employee head) throws AddException {
     	super();
         this.departmentName = departmentName;
         this.location = location;
@@ -94,32 +94,32 @@ public class Department {
     /**
      * Adds a new Employee to the list of employees.
      * @param employee the new Employee
-     * @throws EmployeeAddException can not add an employee that doesn't exist, or an employee that already exists in the department
+     * @throws AddException can not add an employee that doesn't exist, or an employee that already exists in the department
      */
-    public void addEmp(Employee employee) throws EmployeeAddException{
+    public void addEmp(Employee employee) throws AddException{
     	boolean found = false;
     	if(employee == null) {
-    		throw new EmployeeAddException(departmentName);
+    		throw new AddException(1, departmentName);
     	}
     	try {
     		findEmp(employee.getEmployeeId());
     		found = true;
-    	} catch (EmployeeNotFoundException e) {
+    	} catch (NotFoundException e) {
     		employeeList.add(employee);
     	} 
     	if(found) {
-    		throw new EmployeeAddException(departmentName);
+    		throw new AddException(2, departmentName);
     	}
     }
     /**
      * Removes an employee from the list of employees based off the employeeID.
      * @param employeeId the employee to remove
      * @return Employee - the employee that was removed
-     * @throws EmployeeRemoveException can not remove an employee from a list that doesn't exist or a list that is empty
+     * @throws RemoveException can not remove an employee from a list that doesn't exist or a list that is empty
      */
-    public Employee removeEmp(int employeeId) throws EmployeeRemoveException{
+    public Employee removeEmp(int employeeId) throws RemoveException{
     	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-    		throw new EmployeeRemoveException(employeeId, departmentName);
+    		throw new RemoveException(1, employeeId, departmentName);
     	}
     	
     	Employee employee = null;
@@ -127,7 +127,7 @@ public class Department {
     	try {
     		employee = findEmp(employeeId);
     		employeeList.remove(employee);
-    	} catch (EmployeeNotFoundException e) {
+    	} catch (NotFoundException e) {
     		System.err.print(e);
     	} 
     	
@@ -137,11 +137,11 @@ public class Department {
      * Finds a an employee based on their id and retrieves them.
      * @param employeeId the employee to search for
      * @return Employee - the employee that was found
-     * @throws EmployeeNotFoundException can not search a list that doesn't exist or a list that is empty
+     * @throws NotFoundException can not search a list of employees that doesn't exist or a list that is empty
      */
-    public Employee findEmp(int employeeId) throws EmployeeNotFoundException{
+    public Employee findEmp(int employeeId) throws NotFoundException{
     	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-    		throw new EmployeeNotFoundException(1, employeeId, departmentName);
+    		throw new NotFoundException(1, employeeId, departmentName);
     	}
     	
     	Employee employee = null;
@@ -157,7 +157,7 @@ public class Department {
         }
     	
     	if(employee == null) {
-    		throw new EmployeeNotFoundException(2, employeeId, departmentName);
+    		throw new NotFoundException(2, employeeId, departmentName);
     	}
     	 
         return employee;
@@ -166,9 +166,9 @@ public class Department {
      * Updates an employee in the list of current employees.
      * @param employeeId the employee to update
      * @param e the new employee to update to
-     * @throws EmployeeNotFoundException can not update a list that doesn't exist, a list that is empty, or a list that doesn't contain the employee
+     * @throws NotFoundException can not update a list of employees that doesn't exist, a list that is empty, or a list that doesn't contain the employee
      */
-    public void editEmp(int employeeId, Employee e) throws EmployeeNotFoundException{
+    public void editEmp(int employeeId, Employee e) throws NotFoundException{
     	
         employeeList.set(employeeList.indexOf(findEmp(employeeId)), e);
         

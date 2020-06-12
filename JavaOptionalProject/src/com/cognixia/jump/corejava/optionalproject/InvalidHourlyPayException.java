@@ -3,7 +3,7 @@ package com.cognixia.jump.corejava.optionalproject;
 /**
  * This an exception for when a hourly employee's pay can be not updated.
  * @author Lori White
- * @version v1 (06/11/2020)
+ * @version v2 (06/12/2020)
  */
 public class InvalidHourlyPayException extends Exception {
 	

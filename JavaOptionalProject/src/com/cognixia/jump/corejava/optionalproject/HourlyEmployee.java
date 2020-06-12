@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * This class represents a hourly based employee that works for a company under a department.
  * @author Lori White
- * @version v1 (06/11/2020)
+ * @version v2 (06/12/2020)
  */
 public class HourlyEmployee extends Employee{
 

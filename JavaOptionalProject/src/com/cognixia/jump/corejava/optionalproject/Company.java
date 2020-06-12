@@ -3,6 +3,8 @@ package com.cognixia.jump.corejava.optionalproject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cognixia.jump.corejava.optionalproject.Department.DepartmentName;
+
 /**
  * This class represents a Company with departments and their employees.
  * @author Jennifer Echavarria, Samidh Patel, Lori White
@@ -87,88 +89,88 @@ public class Company {
 	public List<Department> getDepartments() {
 		return departments;
 	}
-//    /**
-//     * Adds a new Department to the list of Departments.
-//     * @param department the new Department
-//     * @throws EmployeeAddException can not add a department that doesn't exist, or a department that already exists in the company
-//     */
-//    public void addEmp(Department department) throws EmployeeAddException{
-//    	boolean found = false;
-//    	if(employee == null) {
-//    		throw new EmployeeAddException("This employee could not be added to department " + departmentName +".");
-//    	}
-//    	try {
-//    		findEmp(employee.getEmployeeId());
-//    		found = true;
-//    	} catch (EmployeeNotFoundException e) {
-//    		employeeList.add(employee);
-//    	} 
-//    	if(found) {
-//    		throw new EmployeeAddException("This employee could not be added to department " + departmentName +" since this employee already exists.");
-//    	}
-//    }
-//    /**
-//     * Removes an employee from the list of employees based off the employeeID.
-//     * @param employeeId the employee to remove
-//     * @return Employee - the employee that was removed
-//     * @throws EmployeeRemoveException can not remove an employee from a list that doesn't exist or a list that is empty
-//     */
-//    public Employee removeEmp(int employeeId) throws EmployeeRemoveException{
-//    	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-//    		throw new EmployeeRemoveException("Employee: "+ employeeId + " can not be found in " + departmentName + ", because the department doesn't have employees. Thus the employee can not be removed.");
-//    	}
-//    	
-//    	Employee employee = null;
-//    	
-//    	try {
-//    		employee = findEmp(employeeId);
-//    		employeeList.remove(employee);
-//    	} catch (EmployeeNotFoundException e) {
-//    		System.err.print(e);
-//    	} 
-//    	
-//        return employee;
-//    }
-//    /**
-//     * Finds a an employee based on their id and retrieves them.
-//     * @param employeeId the employee to search for
-//     * @return Employee - the employee that was found
-//     * @throws EmployeeNotFoundException can not search a list that doesn't exist or a list that is empty
-//     */
-//    public Employee findEmp(int employeeId) throws EmployeeNotFoundException{
-//    	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-//    		throw new EmployeeNotFoundException("Employee: "+ employeeId + " can not be found in " + departmentName + ", because the department doesn't have employees.");
-//    	}
-//    	
-//    	Employee employee = null;
-//    	
-//    	 for(int i = 0; i < employeeList.size(); i++) {
-//        	employee = employeeList.get(i);
-//            if(employee.getEmployeeId() == employeeId) {
-//                break;
-//            }
-//            else {
-//            	employee = null;
-//            }
-//        }
-//    	
-//    	if(employee == null) {
-//    		throw new EmployeeNotFoundException("Employee: "+ employeeId + " was not found in " + departmentName + ",");
-//    	}
-//    	 
-//        return employee;
-//    }
-//    /**
-//     * Updates an employee in the list of current employees.
-//     * @param employeeId the employee to update
-//     * @param e the new employee to update to
-//     * @throws EmployeeNotFoundException can not update a list that doesn't exist, a list that is empty, or a list that doesn't contain the employee
-//     */
-//    public void editEmp(int employeeId, Employee e) throws EmployeeNotFoundException{
-//    	
-//        employeeList.set(employeeList.indexOf(findEmp(employeeId)), e);
-//        
-//    }
+    /**
+     * Adds a new Department to the list of Departments.
+     * @param department the new Department
+     * @throws AddException can not add a department that doesn't exist, or a department that already exists in the company
+     */
+    public void addDep(Department department) throws AddException{
+    	boolean found = false;
+    	if(department == null) {
+    		throw new AddException(3, companyName);
+    	}
+    	try {
+    		findDep(department.getDepartmentName());
+    		found = true;
+    	} catch (NotFoundException e) {
+    		departments.add(department);
+    	} 
+    	if(found) {
+    		throw new AddException(4, companyName);
+    	}
+    }
+    /**
+     * Removes a department from the list of departments based off the name.
+     * @param name the department to remove
+     * @return Department - the department that was removed
+     * @throws RemoveException can not remove a department from a list that doesn't exist or a list that is empty
+     */
+    public Department removeDep(DepartmentName name) throws RemoveException{
+    	if(departments == null || departments.size() == 0 || departments.isEmpty()) {
+    		throw new RemoveException(2, name, companyName);
+    	}
+    	
+    	Department d = null;
+    	
+    	try {
+    		d = findDep(name);
+    		departments.remove(d);
+    	} catch (NotFoundException e) {
+    		System.err.print(e);
+    	} 
+    	
+        return d;
+    }
+    /**
+     * Finds a department based on their name and retrieves them.
+     * @param name the department to search for
+     * @return Department - the department that was found
+     * @throws NotFoundException can not search a list of departments that doesn't exist or a list that is empty
+     */
+    public Department findDep(DepartmentName name) throws NotFoundException{
+    	if(departments == null || departments.size() == 0 || departments.isEmpty()) {
+    		throw new NotFoundException(3, name, companyName);
+    	}
+    	
+    	Department d = null;
+    	
+    	 for(int i = 0; i < departments.size(); i++) {
+        	d = departments.get(i);
+            if(d.getDepartmentName() == name) {
+                break;
+            }
+            else {
+            	d = null;
+            }
+        }
+    	
+    	if(d == null) {
+    		throw new NotFoundException(4, name, companyName);
+    	}
+    	 
+        return d;
+    }
+    /**
+     * Updates a department in the list of current departments.
+     * @param name the department to update
+     * @param d the new department to update to
+     * @throws NotFoundException can not update a list of departments that doesn't exist, a list that is empty, or a list that doesn't contain the employee
+     */
+    public void editEmp(DepartmentName name, Department d) throws NotFoundException{
+    	
+    	departments.set(departments.indexOf(findDep(name)), d);
+        
+    }
     /**
      * Creates a string representation of a company.
      * @return String - the string representation of a company
