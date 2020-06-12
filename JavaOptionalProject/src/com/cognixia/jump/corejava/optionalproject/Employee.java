@@ -28,7 +28,7 @@ public class Employee {
     private PayPeriod payPeriod;
     private LocalDate dateHired;
     private EmployeeType type;
-    private static int idCounter=1;
+    private static int idCounter = 0;
 
     /**
      * The overloaded constructor that creates an instance of an employee based on their name, ID, address, job title, payment and date hired.
