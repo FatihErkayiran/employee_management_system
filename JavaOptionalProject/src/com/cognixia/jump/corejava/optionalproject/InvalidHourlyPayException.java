@@ -12,7 +12,7 @@ public class InvalidHourlyPayException extends Exception {
 	 * The overloaded constructor.
 	 * @param message the error message
 	 */
-	public InvalidHourlyPayException(String message) {
-		super(message);
+	public InvalidHourlyPayException(int message) {
+		super("This employee cannot log "+ message + " many hours.");
 	}
 }

@@ -58,7 +58,7 @@ public class HourlyEmployee extends Employee{
 		
 		for(int i = 0; i < hoursWorked.length; i++) {
 			if(!overtimeAllowed && ((super.getType() == EmployeeType.PART_TIME && hoursWorked[i] > MAX_PART_TIME_HOURS) || (super.getType() == EmployeeType.FULL_TIME && hoursWorked[i] > MAX_HOURS_WORKED))) {
-				throw new InvalidHourlyPayException("");
+				throw new InvalidHourlyPayException(hoursWorked[i]);
 			}
 			
 			if(hoursWorked[i] > MAX_HOURS_WORKED) {

@@ -16,17 +16,21 @@ public class Department {
     private DepartmentName departmentName;
     private String location;
     private List<Employee>employeeList;
+    private Employee departmentHead;
 
     /**
      * The overloaded constructor that creates an instance of a department based on it's name and location.
      * @param departmentName the name of the department
      * @param location the location of the department
+     * @throws EmployeeAddException can not add a non-existent head of the department 
      */
-    public Department(DepartmentName departmentName, String location) {
+    public Department(DepartmentName departmentName, String location, Employee head) throws EmployeeAddException {
     	super();
         this.departmentName = departmentName;
         this.location = location;
+        this.departmentHead = head;
         this.employeeList = new ArrayList<Employee>();
+        addEmp(this.departmentHead);
     }
     /**
      * The copy constructor.
@@ -35,6 +39,7 @@ public class Department {
     public Department(Department d) {
     	this.departmentName = d.departmentName;
     	this.location = d.location;
+    	this.departmentHead = d.departmentHead;
     	this.employeeList = d.employeeList;
     }
     /**
@@ -66,6 +71,20 @@ public class Department {
 		this.location = location;
 	}
     /**
+     * Retrieves the head of the department.
+	 * @return Employee - the departmentHead 
+	 */
+	public Employee getDepartmentHead() {
+		return departmentHead;
+	}
+	/**
+	 * Updates the head of the department.
+	 * @param departmentHead the departmentHead to set
+	 */
+	public void setDepartmentHead(Employee departmentHead) {
+		this.departmentHead = departmentHead;
+	}
+	/**
      * Retrieves the list of current employees.
      * @return List<Employee> - the list of employees
      */
@@ -75,12 +94,12 @@ public class Department {
     /**
      * Adds a new Employee to the list of employees.
      * @param employee the new Employee
-     * @throws EmployeeAddException can not add an employee that doesn't exist, or an emplyee that already exists in the department
+     * @throws EmployeeAddException can not add an employee that doesn't exist, or an employee that already exists in the department
      */
     public void addEmp(Employee employee) throws EmployeeAddException{
     	boolean found = false;
     	if(employee == null) {
-    		throw new EmployeeAddException("This employee could not be added to department " + departmentName +".");
+    		throw new EmployeeAddException(departmentName);
     	}
     	try {
     		findEmp(employee.getEmployeeId());
@@ -89,7 +108,7 @@ public class Department {
     		employeeList.add(employee);
     	} 
     	if(found) {
-    		throw new EmployeeAddException("This employee could not be added to department " + departmentName +" since this employee already exists.");
+    		throw new EmployeeAddException(departmentName);
     	}
     }
     /**
@@ -100,7 +119,7 @@ public class Department {
      */
     public Employee removeEmp(int employeeId) throws EmployeeRemoveException{
     	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-    		throw new EmployeeRemoveException("Employee: "+ employeeId + " can not be found in " + departmentName + ", because the department doesn't have employees. Thus the employee can not be removed.");
+    		throw new EmployeeRemoveException(employeeId, departmentName);
     	}
     	
     	Employee employee = null;
@@ -122,7 +141,7 @@ public class Department {
      */
     public Employee findEmp(int employeeId) throws EmployeeNotFoundException{
     	if(employeeList == null || employeeList.size() == 0 || employeeList.isEmpty()) {
-    		throw new EmployeeNotFoundException("Employee: "+ employeeId + " can not be found in " + departmentName + ", because the department doesn't have employees.");
+    		throw new EmployeeNotFoundException(1, employeeId, departmentName);
     	}
     	
     	Employee employee = null;
@@ -138,7 +157,7 @@ public class Department {
         }
     	
     	if(employee == null) {
-    		throw new EmployeeNotFoundException("Employee: "+ employeeId + " was not found in " + departmentName + ",");
+    		throw new EmployeeNotFoundException(2, employeeId, departmentName);
     	}
     	 
         return employee;
@@ -160,10 +179,10 @@ public class Department {
      */
     @Override
     public String toString() {
-    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + employeeList.size();
+    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + employeeList.size() + ", departmentHead= " + departmentHead.toString();
     	
     	if(employeeList.size() != 0) {
-    		out += ", employeeList= \n";
+    		out += ",\n employeeList= \n";
 
             for(int index = 0; index < employeeList.size() - 1; index++) {
             	out += employeeList.get(index).toString() + ",\n";
