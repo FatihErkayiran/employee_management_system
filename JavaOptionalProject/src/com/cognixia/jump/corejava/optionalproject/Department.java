@@ -132,6 +132,9 @@ public class Department {
             if(employee.getEmployeeId() == employeeId) {
                 break;
             }
+            else {
+            	employee = null;
+            }
         }
     	
     	if(employee == null) {
