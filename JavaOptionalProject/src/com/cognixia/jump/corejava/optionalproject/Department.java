@@ -1,5 +1,6 @@
 package com.cognixia.jump.corejava.optionalproject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Department {
     }
     private DepartmentName departmentName;
     private String location;
+    private double minBudget;
     private List<Employee>employeeList;
     private Employee departmentHead;
 
@@ -31,6 +33,7 @@ public class Department {
         this.departmentHead = head;
         this.employeeList = new ArrayList<Employee>();
         addEmp(this.departmentHead);
+        calcBudget();
     }
     /**
      * The copy constructor.
@@ -41,6 +44,7 @@ public class Department {
     	this.location = d.location;
     	this.departmentHead = d.departmentHead;
     	this.employeeList = d.employeeList;
+    	this.minBudget = d.minBudget;
     }
     /**
      * Retrieves the department's name.
@@ -85,6 +89,13 @@ public class Department {
 		this.departmentHead = departmentHead;
 	}
 	/**
+	 * Retrieves the minimum budget of the department.
+	 * @return double - the minBudget
+	 */
+	public double getMinBudget() {
+		return minBudget;
+	}
+	/**
      * Retrieves the list of current employees.
      * @return List<Employee> - the list of employees
      */
@@ -110,6 +121,7 @@ public class Department {
     	if(found) {
     		throw new AddException(2, departmentName);
     	}
+    	calcBudget();
     }
     /**
      * Removes an employee from the list of employees based off the employeeID.
@@ -130,6 +142,8 @@ public class Department {
     	} catch (NotFoundException e) {
     		System.err.print(e);
     	} 
+    	
+    	calcBudget();
     	
         return employee;
     }
@@ -159,7 +173,7 @@ public class Department {
     	if(employee == null) {
     		throw new NotFoundException(2, employeeId, departmentName);
     	}
-    	 
+    	
         return employee;
     }
     /**
@@ -171,7 +185,16 @@ public class Department {
     public void editEmp(int employeeId, Employee e) throws NotFoundException{
     	
         employeeList.set(employeeList.indexOf(findEmp(employeeId)), e);
-        
+        calcBudget();        
+    }
+    /**
+     * Calculates the minimum budget for the department.
+     */
+    public void calcBudget() {
+    	this.minBudget = 0.0;
+    	for(int i = 0; i < employeeList.size(); i++) {
+    		this.minBudget += employeeList.get(i).getPay() * (double)(employeeList.get(i).getPayPeriod().pp);
+    	}
     }
     /**
      * Creates a string representation of a department.
@@ -179,7 +202,8 @@ public class Department {
      */
     @Override
     public String toString() {
-    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + employeeList.size() + ", departmentHead= " + departmentHead.toString();
+    	DecimalFormat df = new DecimalFormat(".00");
+    	String out = "Department [departmentName= " + departmentName + ", location= " + location + ", employeeNum= " + employeeList.size() + ", minBudget= $" + df.format(minBudget) + ", departmentHead= " + departmentHead.toString();
     	
     	if(employeeList.size() != 0) {
     		out += ",\n employeeList= \n";
