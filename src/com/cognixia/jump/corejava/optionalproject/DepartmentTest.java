@@ -43,7 +43,7 @@ class DepartmentTest {
         Department department = new Department(Department.DepartmentName.HR, "NEW YORK",employee0);
         LocalDate date = LocalDate.now();
         Employee employee = null;
-        Employee employee1 = new Employee("name1", "tx", "developer", 50.000, date, Employee.EmployeeType.FULL_TIME, Employee.PayPeriod.MONTHLY);G
+        Employee employee1 = new Employee("name1", "tx", "developer", 50.000, date, Employee.EmployeeType.FULL_TIME, Employee.PayPeriod.MONTHLY);
 
         department.addEmp(employee1);
         department.removeEmp(1);
