@@ -24,7 +24,7 @@ public class Department {
      * The overloaded constructor that creates an instance of a department based on it's name and location.
      * @param departmentName the name of the department
      * @param location the location of the department
-     * @throws EmployeeAddException can not add a non-existent head of the department 
+     * @throws AddException can not add a non-existent head of the department
      */
     public Department(DepartmentName departmentName, String location, Employee head) throws AddException {
     	super();
@@ -100,7 +100,7 @@ public class Department {
      * @return List<Employee> - the list of employees
      */
     public List<Employee> getListEmp(){
-    	return employeeList;
+		return employeeList;
     }
     /**
      * Adds a new Employee to the list of employees.
